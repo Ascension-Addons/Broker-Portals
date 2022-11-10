@@ -305,7 +305,7 @@ local function SetupSpells()
       tinsert(runeRandom, v[1])
     end
   end
-  if runeRandom == {} then
+  if #runeRandom > 0 then
     tinsert(portals, { runeRandom[math.random(1, #runeRandom)], 'TRUE' })
   end
   spells = nil
