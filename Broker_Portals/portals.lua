@@ -66,6 +66,7 @@ local items = {
 -- IDs of items usable instead of hearthstone
 local scrolls = {
   6948, -- Hearthstone
+  1903515, -- Fel-Infused Gateway
   28585, -- Ruby Slippers
   44315, -- Scroll of Recall III
   44314, -- Scroll of Recall II
