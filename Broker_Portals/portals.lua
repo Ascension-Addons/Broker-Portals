@@ -401,20 +401,16 @@ local function ShowHearthstone()
         type = 'item',
         item = name
       }
-      break
+      dewdrop:AddLine(
+        'text', text,
+        'secure', secure,
+        'icon', icon,
+        'func', function() UpdateIcon(icon) end,
+        'closeWhenClicked', true
+      )
     end
   end
-
-  if secure ~= nil then
-    dewdrop:AddLine(
-      'text', text,
-      'secure', secure,
-      'icon', icon,
-      'func', function() UpdateIcon(icon) end,
-      'closeWhenClicked', true
-    )
-    dewdrop:AddLine()
-  end
+  dewdrop:AddLine()
 end
 
 local function ShowOtherItems()
