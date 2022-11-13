@@ -321,6 +321,7 @@ end
 
 local function UpdateSpells()
   SetupSpells()
+  local i = 0
 
   if portals then
     for _, v in ipairs(portals) do
@@ -338,8 +339,14 @@ local function UpdateSpells()
             spell = spell
           }
         }
+
+        i = i + 1
       end
     end
+  end
+
+  if i > 0 then
+    dewdrop:AddLine()
   end
 end
 
@@ -369,7 +376,7 @@ end
 
 local function GetItemCooldowns()
   local cooldown, startTime, duration, cooldowns = nil, nil, nil, nil
-  
+
   -- items
   for _, item in pairs(items) do
     if GetItemCount(item) > 0 then
@@ -501,7 +508,6 @@ local function UpdateMenu(level, value)
 
     methods = {}
     UpdateSpells()
-    dewdrop:AddLine()
     local chatType = (UnitInRaid("player") and "RAID") or (GetNumPartyMembers() > 0 and "PARTY") or nil
     for k, v in pairsByKeys(methods) do
       if v.secure and GetSpellCooldown(v.text) == 0 then
