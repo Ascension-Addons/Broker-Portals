@@ -79,8 +79,12 @@ local sod = {
   83128 -- Hillsbrad Foothills
 }
 -- Ascension: Scrolls of Retreat
-tinsert(sor, { 1175626, 'TRUE' }) -- Orgrimmar
-tinsert(sor, { 1175627, 'TRUE' }) -- Stormwind
+local sor = {}
+if fac == "Horde" then
+  tinsert(sor, { 1175626, 'TRUE' }) -- Orgrimmar
+else
+  tinsert(sor, { 1175627, 'TRUE' }) -- Stormwind
+end
 
 obj = LibStub:GetLibrary('LibDataBroker-1.1'):NewDataObject(addonName, {
   type = 'data source',
