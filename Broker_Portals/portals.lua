@@ -277,7 +277,7 @@ local function SetupSpells()
       tinsert(portals, { 102184, 'TRUE' }) -- Garadar
       tinsert(portals, { 102190, 'TRUE' }) -- Stonebreaker Hold
       tinsert(portals, { 102201, 'TRUE' }) -- Zabra'jin
-    elseif UnitFactionGroup('player') == "Alliance" then
+    else
       tinsert(portals, { 777015, 'TRUE' }) -- The Exodar
       tinsert(portals, { 102185, 'TRUE' }) -- Honor Hold
       tinsert(portals, { 102193, 'TRUE' }) -- Telaar
