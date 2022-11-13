@@ -532,29 +532,13 @@ end
 
 function frame:PLAYER_LOGIN()
   -- PortalsDB.minimap is there for smooth upgrade of SVs from old version
-  if (not PortalsDB) or (PortalsDB.version == nil) then
+  if (not PortalsDB) then
     PortalsDB = {}
     PortalsDB.minimap = {}
     PortalsDB.minimap.hide = false
     PortalsDB.showItems = true
     PortalsDB.showItemCooldowns = true
     PortalsDB.announce = false
-    PortalsDB.version = 4
-  end
-
-  -- upgrade from versions
-  if PortalsDB.version == 3 then
-    PortalsDB.announce = false
-    PortalsDB.version = 4
-  elseif PortalsDB.version == 2 then
-    PortalsDB.showItemCooldowns = true
-    PortalsDB.announce = false
-    PortalsDB.version = 4
-  elseif PortalsDB.version < 2 then
-    PortalsDB.showItems = true
-    PortalsDB.showItemCooldowns = true
-    PortalsDB.announce = false
-    PortalsDB.version = 4
   end
 
   if icon then
