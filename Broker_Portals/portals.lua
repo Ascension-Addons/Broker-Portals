@@ -81,9 +81,9 @@ local sod = {
 -- Ascension: Scrolls of Retreat
 local sor = nil
 if fac == "Horde" then
-  sor = 1175626 -- Orgrimmar
+  sor = 1175627 -- Orgrimmar
 else
-  sor = 1175627 -- Stormwind
+  sor = 1175626 -- Stormwind
 end
 
 obj = LibStub:GetLibrary('LibDataBroker-1.1'):NewDataObject(addonName, {
@@ -370,6 +370,43 @@ end
 local function GetItemCooldowns()
   local cooldown, startTime, duration, cooldowns = nil, nil, nil, nil
 
+  -- sod
+  for i = 1, #sod do
+    startTime, duration = GetSpellCooldown(sod[i])
+    cooldown = duration - (GetTime() - startTime)
+    if cooldown >= 60 then
+      cooldown = math_floor(cooldown / 60)
+      cooldown = cooldown .. ' ' .. L['MIN']
+    elseif cooldown <= 0 then
+      cooldown = L['READY']
+    else
+      cooldown = cooldown .. ' ' .. L['SEC']
+    end
+    local name = GetSpellInfo(sod[i])
+    if cooldowns == nil then
+      cooldowns = {}
+    end
+    cooldowns[name] = cooldown
+  end
+  -- sor
+  if GetItemCount(sor) > 0 then
+    startTime, duration = GetItemCooldown(sor)
+    cooldown = duration - (GetTime() - startTime)
+    if cooldown >= 60 then
+      cooldown = math_floor(cooldown / 60)
+      cooldown = cooldown .. ' ' .. L['MIN']
+    elseif cooldown <= 0 then
+      cooldown = L['READY']
+    else
+      cooldown = cooldown .. ' ' .. L['SEC']
+    end
+    local name = GetItemInfo(sor)
+    if cooldowns == nil then
+      cooldowns = {}
+    end
+    cooldowns[name] = cooldown
+  end
+  -- items
   for _, item in pairs(items) do
     if GetItemCount(item) > 0 then
       startTime, duration = GetItemCooldown(item)
