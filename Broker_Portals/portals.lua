@@ -469,7 +469,7 @@ local function UpdateMenu(level, value)
           'icon', v.spellIcon,
           'func', function()
             UpdateIcon(v.spellIcon)
-            if v.isPortal and chatType then
+            if v.isPortal and chatType and PortalsDB.announce then
               SendChatMessage(L['ANNOUNCEMENT'] .. ' ' .. v.text, chatType)
             end
           end,
