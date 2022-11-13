@@ -75,7 +75,7 @@ local scrolls = {
 
 -- Ascension: Scrolls of Defense
 local sod = {
-  83126,  -- Ashenvale
+  83126, -- Ashenvale
   83128 -- Hillsbrad Foothills
 }
 -- Ascension: Scrolls of Retreat
@@ -171,40 +171,40 @@ end
 local function SetupSpells()
   local spells = {
     Alliance = {
-      { 3561, 'TRUE' }, --TP:Stormwind
-      { 3562, 'TRUE' }, --TP:Ironforge
-      { 3565, 'TRUE' }, --TP:Darnassus
-      { 32271, 'TRUE' }, --TP:Exodar
-      { 49359, 'TRUE' }, --TP:Theramore
-      { 33690, 'TRUE' }, --TP:Shattrath
-      { 53140, 'TRUE' }, --TP:Dalaran
-      { 10059, 'TRUE' }, --P:Stormwind
-      { 11416, 'TRUE' }, --P:Ironforge
-      { 11419, 'TRUE' }, --P:Darnassus
-      { 32266, 'TRUE' }, --P:Exodar
-      { 49360, 'TRUE' }, --P:Theramore
-      { 33691, 'TRUE' }, --P:Shattrath
-      { 53142, 'TRUE' } --P:Dalaran
+      { 3561, 'TRUE' }, -- TP:Stormwind
+      { 3562, 'TRUE' }, -- TP:Ironforge
+      { 3565, 'TRUE' }, -- TP:Darnassus
+      { 32271, 'TRUE' }, -- TP:Exodar
+      { 49359, 'TRUE' }, -- TP:Theramore
+      { 33690, 'TRUE' }, -- TP:Shattrath
+      { 10059, 'TRUE' }, -- P:Stormwind
+      { 11416, 'TRUE' }, -- P:Ironforge
+      { 11419, 'TRUE' }, -- P:Darnassus
+      { 32266, 'TRUE' }, -- P:Exodar
+      { 49360, 'TRUE' }, -- P:Theramore
+      { 33691, 'TRUE' }, -- P:Shattrath
     },
     Horde = {
-      { 3563, 'TRUE' }, --TP:Undercity
-      { 3566, 'TRUE' }, --TP:Thunder Bluff
-      { 3567, 'TRUE' }, --TP:Orgrimmar
-      { 32272, 'TRUE' }, --TP:Silvermoon
-      { 49358, 'TRUE' }, --TP:Stonard
-      { 35715, 'TRUE' }, --TP:Shattrath
-      { 53140, 'TRUE' }, --TP:Dalaran
-      { 11418, 'TRUE' }, --P:Undercity
-      { 11420, 'TRUE' }, --P:Thunder Bluff
-      { 11417, 'TRUE' }, --P:Orgrimmar
-      { 32267, 'TRUE' }, --P:Silvermoon
-      { 49361, 'TRUE' }, --P:Stonard
-      { 35717, 'TRUE' }, --P:Shattrath
-      { 53142, 'TRUE' } --P:Dalaran
+      { 3563, 'TRUE' }, -- TP:Undercity
+      { 3566, 'TRUE' }, -- TP:Thunder Bluff
+      { 3567, 'TRUE' }, -- TP:Orgrimmar
+      { 32272, 'TRUE' }, -- TP:Silvermoon
+      { 49358, 'TRUE' }, -- TP:Stonard
+      { 35715, 'TRUE' }, -- TP:Shattrath
+      { 11418, 'TRUE' }, -- P:Undercity
+      { 11420, 'TRUE' }, -- P:Thunder Bluff
+      { 11417, 'TRUE' }, -- P:Orgrimmar
+      { 32267, 'TRUE' }, -- P:Silvermoon
+      { 49361, 'TRUE' }, -- P:Stonard
+      { 35717, 'TRUE' }, -- P:Shattrath
     }
   }
 
   local _, class = UnitClass('player')
+  if expac == "WRATH" then
+    tinsert(portals, { 53140, 'TRUE' }) -- TP:Dalaran
+    tinsert(portals, { 53142, 'TRUE' }) -- P:Dalaran
+  end
   if class == 'HERO' then
     if IsSpellKnown(818045) then
       portals = spells[fac]
@@ -218,15 +218,15 @@ local function SetupSpells()
     portals = spells[fac]
   elseif class == 'DEATHKNIGHT' then
     portals = {
-      { 50977, 'TRUE' } --Death Gate
+      { 50977, 'TRUE' } -- Death Gate
     }
   elseif class == 'DRUID' then
     portals = {
-      { 18960, 'TRUE' } --TP:Moonglade
+      { 18960, 'TRUE' } -- TP:Moonglade
     }
   elseif class == 'SHAMAN' then
     portals = {
-      { 556, 'TRUE' } --Astral Recall
+      { 556, 'TRUE' } -- Astral Recall
     }
   end
   -- Ascension: Stones of Retreat
