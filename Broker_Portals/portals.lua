@@ -508,7 +508,10 @@ local function UpdateMenu(level, value)
     if UpdateSpells() > 0 then
       dewdrop:AddLine()
     end
-    local chatType = (UnitInRaid("player") and "RAID") or (GetNumPartyMembers() > 0 and "PARTY") or nil
+    local chatType = PortalsDB.announceType
+    if PortalsDB.announceType == "PARTYRAID" then
+      chatType = (UnitInRaid("player") and "RAID") or (GetNumPartyMembers() > 0 and "PARTY")
+    end
     for k, v in pairsByKeys(methods) do
       if v.secure and GetSpellCooldown(v.text) == 0 then
         dewdrop:AddLine(
@@ -571,6 +574,38 @@ local function UpdateMenu(level, value)
       'func', function() PortalsDB.announce = not PortalsDB.announce end,
       'closeWhenClicked', true
     )
+    if PortalsDB.announce then
+      dewdrop:AddLine(
+        'text', 'Announce in',
+        'hasArrow', true,
+        'value', 'announce'
+      )
+    end
+    dewdrop:AddLine(
+      'text', 'Show portals only in Party/Raid',
+      'checked', false,
+      'func', function() PortalsDB.announce = not PortalsDB.announce end,
+      'closeWhenClicked', true
+    )
+  elseif level == 3 and value == 'announce' then
+    dewdrop:AddLine(
+      'text', 'Say',
+      'checked', PortalsDB.announceType == 'SAY',
+      'func', function() PortalsDB.announceType = 'SAY' end,
+      'closeWhenClicked', true
+    )
+    dewdrop:AddLine(
+      'text', '|cffff0000Yell|r',
+      'checked', PortalsDB.announceType == 'YELL',
+      'func', function() PortalsDB.announceType = 'YELL' end,
+      'closeWhenClicked', true
+    )
+    dewdrop:AddLine(
+      'text', '|cff00ffffParty|r/|cffff7f00Raid',
+      'checked', PortalsDB.announceType == 'PARTYRAID',
+      'func', function() PortalsDB.announceType = 'PARTYRAID' end,
+      'closeWhenClicked', true
+    )
   end
 end
 
@@ -582,6 +617,9 @@ function frame:PLAYER_LOGIN()
     PortalsDB.showItems = true
     PortalsDB.showItemCooldowns = true
     PortalsDB.announce = false
+  end
+  if PortalsDB.announceType == nil then
+    PortalsDB.announceType = 'PARTYRAID'
   end
 
   if icon then
