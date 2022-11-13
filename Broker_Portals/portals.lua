@@ -93,7 +93,7 @@ obj = LibStub:GetLibrary('LibDataBroker-1.1'):NewDataObject(addonName, {
 })
 local obj = obj
 local methods = {}
-local portals = nil
+local portals = {}
 local frame = CreateFrame('frame')
 
 frame:SetScript('OnEvent', function(self, event, ...) if self[event] then return self[event](self, event, ...) end end)
@@ -175,12 +175,12 @@ end
 local function SetupSpells()
   local spells = {
     Alliance = {
-      { 3561, 'TRUE' }, -- TP:Stormwind
-      { 3562, 'TRUE' }, -- TP:Ironforge
-      { 3565, 'TRUE' }, -- TP:Darnassus
-      { 32271, 'TRUE' }, -- TP:Exodar
-      { 49359, 'TRUE' }, -- TP:Theramore
-      { 33690, 'TRUE' }, -- TP:Shattrath
+      { 3561 }, -- TP:Stormwind
+      { 3562 }, -- TP:Ironforge
+      { 3565 }, -- TP:Darnassus
+      { 32271 }, -- TP:Exodar
+      { 49359 }, -- TP:Theramore
+      { 33690 }, -- TP:Shattrath
       { 10059, 'TRUE' }, -- P:Stormwind
       { 11416, 'TRUE' }, -- P:Ironforge
       { 11419, 'TRUE' }, -- P:Darnassus
@@ -189,12 +189,12 @@ local function SetupSpells()
       { 33691, 'TRUE' }, -- P:Shattrath
     },
     Horde = {
-      { 3563, 'TRUE' }, -- TP:Undercity
-      { 3566, 'TRUE' }, -- TP:Thunder Bluff
-      { 3567, 'TRUE' }, -- TP:Orgrimmar
-      { 32272, 'TRUE' }, -- TP:Silvermoon
-      { 49358, 'TRUE' }, -- TP:Stonard
-      { 35715, 'TRUE' }, -- TP:Shattrath
+      { 3563 }, -- TP:Undercity
+      { 3566 }, -- TP:Thunder Bluff
+      { 3567 }, -- TP:Orgrimmar
+      { 32272 }, -- TP:Silvermoon
+      { 49358 }, -- TP:Stonard
+      { 35715 }, -- TP:Shattrath
       { 11418, 'TRUE' }, -- P:Undercity
       { 11420, 'TRUE' }, -- P:Thunder Bluff
       { 11417, 'TRUE' }, -- P:Orgrimmar
@@ -206,7 +206,7 @@ local function SetupSpells()
 
   local _, class = UnitClass('player')
   if expac == "WRATH" then
-    tinsert(portals, { 53140, 'TRUE' }) -- TP:Dalaran
+    tinsert(portals, { 53140 }) -- TP:Dalaran
     tinsert(portals, { 53142, 'TRUE' }) -- P:Dalaran
   end
   if class == 'HERO' then
@@ -215,86 +215,86 @@ local function SetupSpells()
     else
       portals = {};
     end
-    tinsert(portals, { 18960, 'TRUE' })
-    tinsert(portals, { 556, 'TRUE' })
+    tinsert(portals, { 18960 })
+    tinsert(portals, { 556 })
   end
   if class == 'MAGE' then
     portals = spells[fac]
   elseif class == 'DEATHKNIGHT' then
     portals = {
-      { 50977, 'TRUE' } -- Death Gate
+      { 50977 } -- Death Gate
     }
   elseif class == 'DRUID' then
     portals = {
-      { 18960, 'TRUE' } -- TP:Moonglade
+      { 18960 } -- TP:Moonglade
     }
   elseif class == 'SHAMAN' then
     portals = {
-      { 556, 'TRUE' } -- Astral Recall
+      { 556 } -- Astral Recall
     }
   end
   -- Ascension: Stones of Retreat
   if fac == "Horde" then
-    tinsert(portals, { 777000, 'TRUE' }) -- Orgrimmar
-    tinsert(portals, { 777001, 'TRUE' }) -- Undercity
-    tinsert(portals, { 777002, 'TRUE' }) -- Thunder Bluff
-    tinsert(portals, { 177702, 'TRUE' }) -- Camp Mojache
-    tinsert(portals, { 777021, 'TRUE' }) -- Bloodvenom Post
-    tinsert(portals, { 1777027, 'TRUE' }) -- Stonard
-    tinsert(portals, { 1777037, 'TRUE' }) -- Revantusk Village
-    tinsert(portals, { 1777043, 'TRUE' }) -- Shadowprey Village
+    tinsert(portals, { 777000 }) -- Orgrimmar
+    tinsert(portals, { 777001 }) -- Undercity
+    tinsert(portals, { 777002 }) -- Thunder Bluff
+    tinsert(portals, { 177702 }) -- Camp Mojache
+    tinsert(portals, { 777021 }) -- Bloodvenom Post
+    tinsert(portals, { 1777027 }) -- Stonard
+    tinsert(portals, { 1777037 }) -- Revantusk Village
+    tinsert(portals, { 1777043 }) -- Shadowprey Village
   else
-    tinsert(portals, { 777003, 'TRUE' }) -- Stormwind
-    tinsert(portals, { 777004, 'TRUE' }) -- Darnassus
-    tinsert(portals, { 777005, 'TRUE' }) -- Ironforge
-    tinsert(portals, { 1777044, 'TRUE' }) -- Nijei's Point
-    tinsert(portals, { 177702, 'TRUE' }) -- Feathermoon Stronghold
-    tinsert(portals, { 1777026, 'TRUE' }) -- Nethergarde Keep
-    tinsert(portals, { 1777036, 'TRUE' }) -- Aerie Peak
+    tinsert(portals, { 777003 }) -- Stormwind
+    tinsert(portals, { 777004 }) -- Darnassus
+    tinsert(portals, { 777005 }) -- Ironforge
+    tinsert(portals, { 1777044 }) -- Nijei's Point
+    tinsert(portals, { 177702 }) -- Feathermoon Stronghold
+    tinsert(portals, { 1777026 }) -- Nethergarde Keep
+    tinsert(portals, { 1777036 }) -- Aerie Peak
   end
 
-  tinsert(portals, { 777006, 'TRUE' }) -- Light's Hope
-  tinsert(portals, { 777007, 'TRUE' }) -- Everlook
-  tinsert(portals, { 777008, 'TRUE' }) -- Booty Bay
-  tinsert(portals, { 777009, 'TRUE' }) -- Gadgetzan
-  tinsert(portals, { 777010, 'TRUE' }) -- Ratchet
-  tinsert(portals, { 777011, 'TRUE' }) -- Thorium Point
-  tinsert(portals, { 777012, 'TRUE' }) -- Mudsprocket
-  tinsert(portals, { 777013, 'TRUE' }) -- Cenarion Hold
-  tinsert(portals, { 777023, 'TRUE' }) -- Azshara
-  tinsert(portals, { 777020, 'TRUE' }) -- Gurubashi Arena
-  tinsert(portals, { 777024, 'TRUE' }) -- Zul'Gurub
-  tinsert(portals, { 777025, 'TRUE' }) -- Blackrock Mountain
-  tinsert(portals, { 777026, 'TRUE' }) -- Gates of Ahn'Quiraj
-  tinsert(portals, { 777027, 'TRUE' }) -- Onyxia's Lair
-  tinsert(portals, { 1777023, 'TRUE' }) -- Yojamba Isle
+  tinsert(portals, { 777006 }) -- Light's Hope
+  tinsert(portals, { 777007 }) -- Everlook
+  tinsert(portals, { 777008 }) -- Booty Bay
+  tinsert(portals, { 777009 }) -- Gadgetzan
+  tinsert(portals, { 777010 }) -- Ratchet
+  tinsert(portals, { 777011 }) -- Thorium Point
+  tinsert(portals, { 777012 }) -- Mudsprocket
+  tinsert(portals, { 777013 }) -- Cenarion Hold
+  tinsert(portals, { 777023 }) -- Azshara
+  tinsert(portals, { 777020 }) -- Gurubashi Arena
+  tinsert(portals, { 777024 }) -- Zul'Gurub
+  tinsert(portals, { 777025 }) -- Blackrock Mountain
+  tinsert(portals, { 777026 }) -- Gates of Ahn'Quiraj
+  tinsert(portals, { 777027 }) -- Onyxia's Lair
+  tinsert(portals, { 1777023 }) -- Yojamba Isle
 
   if expac == "TBC" then
-    tinsert(portals, { 777016, 'TRUE' }) -- Shattrath
-    tinsert(portals, { 777017, 'TRUE' }) -- Area 52
-    tinsert(portals, { 777018, 'TRUE' }) -- Altar of Sha'tar
-    tinsert(portals, { 777019, 'TRUE' }) -- Sanctum of the Stars
-    tinsert(portals, { 102182, 'TRUE' }) -- Cenarion Refuge
-    tinsert(portals, { 102186, 'TRUE' }) -- Ogri'la
-    tinsert(portals, { 102196, 'TRUE' }) -- Stormspire
-    tinsert(portals, { 777008, 'TRUE' }) -- Sanctum of the Stars
-    tinsert(portals, { 777008, 'TRUE' }) -- Altar of Sha'tar
-    tinsert(portals, { 102180, 'TRUE' }) -- Cenarion Refuge
+    tinsert(portals, { 777016 }) -- Shattrath
+    tinsert(portals, { 777017 }) -- Area 52
+    tinsert(portals, { 777018 }) -- Altar of Sha'tar
+    tinsert(portals, { 777019 }) -- Sanctum of the Stars
+    tinsert(portals, { 102182 }) -- Cenarion Refuge
+    tinsert(portals, { 102186 }) -- Ogri'la
+    tinsert(portals, { 102196 }) -- Stormspire
+    tinsert(portals, { 777008 }) -- Sanctum of the Stars
+    tinsert(portals, { 777008 }) -- Altar of Sha'tar
+    tinsert(portals, { 102180 }) -- Cenarion Refuge
 
     if fac == "Horde" then
-      tinsert(portals, { 777014, 'TRUE' }) -- Silvermoon City
-      tinsert(portals, { 102197, 'TRUE' }) -- Thrallmar
-      tinsert(portals, { 102189, 'TRUE' }) -- Shadowmoon Village
-      tinsert(portals, { 102184, 'TRUE' }) -- Garadar
-      tinsert(portals, { 102190, 'TRUE' }) -- Stonebreaker Hold
-      tinsert(portals, { 102201, 'TRUE' }) -- Zabra'jin
+      tinsert(portals, { 777014 }) -- Silvermoon City
+      tinsert(portals, { 102197 }) -- Thrallmar
+      tinsert(portals, { 102189 }) -- Shadowmoon Village
+      tinsert(portals, { 102184 }) -- Garadar
+      tinsert(portals, { 102190 }) -- Stonebreaker Hold
+      tinsert(portals, { 102201 }) -- Zabra'jin
     else
-      tinsert(portals, { 777015, 'TRUE' }) -- The Exodar
-      tinsert(portals, { 102185, 'TRUE' }) -- Honor Hold
-      tinsert(portals, { 102193, 'TRUE' }) -- Telaar
-      tinsert(portals, { 102178, 'TRUE' }) -- Allerian Stronghold
-      tinsert(portals, { 102187, 'TRUE' }) -- Orebor Harborage
-      tinsert(portals, { 102200, 'TRUE' }) -- Wildhammer Stronghold
+      tinsert(portals, { 777015 }) -- The Exodar
+      tinsert(portals, { 102185 }) -- Honor Hold
+      tinsert(portals, { 102193 }) -- Telaar
+      tinsert(portals, { 102178 }) -- Allerian Stronghold
+      tinsert(portals, { 102187 }) -- Orebor Harborage
+      tinsert(portals, { 102200 }) -- Wildhammer Stronghold
     end
   end
 
@@ -323,19 +323,16 @@ local function UpdateSpells()
   SetupSpells()
 
   if portals then
-    local reagentCache = {}
-    reagentCache['TRUE'] = true
-
-    for _, unTransSpell in ipairs(portals) do
-      local spell, _, spellIcon = GetSpellInfo(unTransSpell[1])
+    for _, v in ipairs(portals) do
+      local spell, _, spellIcon = GetSpellInfo(v[1])
       local spellid = findSpell(spell)
 
-      if spellid and reagentCache[unTransSpell[2]] then
+      if spellid then
         methods[spell] = {
           spellid = spellid,
           text = spell,
           spellIcon = spellIcon,
-          isPortal = unTransSpell[2] == 'TRUE',
+          isPortal = v[2],
           secure = {
             type = 'spell',
             spell = spell
