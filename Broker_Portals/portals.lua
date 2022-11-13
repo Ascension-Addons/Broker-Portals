@@ -232,7 +232,7 @@ local function SetupSpells()
     tinsert(portals, { 1777027, 'TRUE' }) -- Stonard
     tinsert(portals, { 1777037, 'TRUE' }) -- Revantusk Village
     tinsert(portals, { 1777043, 'TRUE' }) -- Shadowprey Village
-  elseif UnitFactionGroup('player') == "Alliance" then
+  else
     tinsert(portals, { 777003, 'TRUE' }) -- Stormwind
     tinsert(portals, { 777004, 'TRUE' }) -- Darnassus
     tinsert(portals, { 777005, 'TRUE' }) -- Ironforge
