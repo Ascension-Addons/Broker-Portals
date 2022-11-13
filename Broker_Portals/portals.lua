@@ -345,9 +345,7 @@ local function UpdateSpells()
     end
   end
 
-  if i > 0 then
-    dewdrop:AddLine()
-  end
+  return i
 end
 
 local function UpdateIcon(icon)
@@ -507,7 +505,9 @@ local function UpdateMenu(level, value)
     )
 
     methods = {}
-    UpdateSpells()
+    if UpdateSpells() > 0 then
+      dewdrop:AddLine()
+    end
     local chatType = (UnitInRaid("player") and "RAID") or (GetNumPartyMembers() > 0 and "PARTY") or nil
     for k, v in pairsByKeys(methods) do
       if v.secure and GetSpellCooldown(v.text) == 0 then
