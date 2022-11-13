@@ -79,11 +79,11 @@ local sod = {
   83128 -- Hillsbrad Foothills
 }
 -- Ascension: Scrolls of Retreat
-local sor = {}
+local sor = nil
 if fac == "Horde" then
-  tinsert(sor, { 1175626, 'TRUE' }) -- Orgrimmar
+  sor = 1175626 -- Orgrimmar
 else
-  tinsert(sor, { 1175627, 'TRUE' }) -- Stormwind
+  sor = 1175627 -- Stormwind
 end
 
 obj = LibStub:GetLibrary('LibDataBroker-1.1'):NewDataObject(addonName, {
@@ -417,18 +417,16 @@ local function ShowHearthstone()
   dewdrop:AddLine()
 end
 
-local function ShowOtherItems()
-  local secure, icon, name
-  local i = 0
+local function ShowScrolls()
+  local i = 0, secure
 
-  for _, itemID in ipairs(items) do
-    if hasItem(itemID) then
-      name, _, _, _, _, _, _, _, _, icon = GetItemInfo(itemID)
+  for j = 1, #sod do
+    local name, _, icon = GetSpellInfo(sod[j])
+    if findSpell(name) then
       secure = {
-        type = 'item',
-        item = name
+        type = 'spell',
+        spell = name,
       }
-
       dewdrop:AddLine(
         'text', name,
         'secure', secure,
@@ -439,9 +437,48 @@ local function ShowOtherItems()
       i = i + 1
     end
   end
-  if i > 0 then
-    dewdrop:AddLine()
+
+  if hasItem(sor) then
+    local name, _, _, _, _, _, _, _, _, icon = GetItemInfo(sor)
+    secure = {
+      type = 'item',
+      item = name
+    }
+    dewdrop:AddLine(
+      'text', name,
+      'secure', secure,
+      'icon', icon,
+      'func', function() UpdateIcon(icon) end,
+      'closeWhenClicked', true
+    )
+    i = i + 1
   end
+
+  return i
+end
+
+local function ShowOtherItems()
+  local i = 0, secure, icon, name
+
+  for _, itemID in ipairs(items) do
+    if hasItem(itemID) then
+      name, _, _, _, _, _, _, _, _, icon = GetItemInfo(itemID)
+      secure = {
+        type = 'item',
+        item = name
+      }
+      dewdrop:AddLine(
+        'text', name,
+        'secure', secure,
+        'icon', icon,
+        'func', function() UpdateIcon(icon) end,
+        'closeWhenClicked', true
+      )
+      i = i + 1
+    end
+  end
+
+  return i
 end
 
 local function ToggleMinimap()
@@ -487,7 +524,7 @@ local function UpdateMenu(level, value)
     ShowHearthstone()
 
     if PortalsDB.showItems then
-      ShowOtherItems()
+      if (ShowScrolls() + ShowOtherItems()) > 0 then dewdrop:AddLine() end
     end
 
     dewdrop:AddLine(
@@ -531,7 +568,6 @@ local function UpdateMenu(level, value)
 end
 
 function frame:PLAYER_LOGIN()
-  -- PortalsDB.minimap is there for smooth upgrade of SVs from old version
   if (not PortalsDB) then
     PortalsDB = {}
     PortalsDB.minimap = {}
