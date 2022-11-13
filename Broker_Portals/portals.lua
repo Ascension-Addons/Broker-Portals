@@ -18,11 +18,14 @@ local GetSpellName = GetSpellName
 local SendChatMessage = SendChatMessage
 local UnitInRaid = UnitInRaid
 local GetNumPartyMembers = GetNumPartyMembers
+
 local xpaclist = { "CLASSIC", "TBC", "WRATH" };
 local expac = xpaclist[GetAccountExpansionLevel() + 1];
 
 local addonName, addonTable = ...
 local L = addonTable.L
+local fac = UnitFactionGroup('player')
+
 
 -- IDs of items usable for transportation
 local items = {
@@ -58,9 +61,6 @@ local items = {
   35230, -- Darnarian's Scroll of Teleportation
   50287, -- Boots of the Bay
   52251, -- Jaina's Locket
-  -- Ascension: Scrolls of Retreat
-  1175626, -- Orgrimmar
-  1175627 -- Stormwind
 }
 
 -- IDs of items usable instead of hearthstone
@@ -72,6 +72,15 @@ local scrolls = {
   44314, -- Scroll of Recall II
   37118 -- Scroll of Recall
 }
+
+-- Ascension: Scrolls of Defense
+local sod = {
+  83126,  -- Ashenvale
+  83128 -- Hillsbrad Foothills
+}
+-- Ascension: Scrolls of Retreat
+tinsert(sor, { 1175626, 'TRUE' }) -- Orgrimmar
+tinsert(sor, { 1175627, 'TRUE' }) -- Stormwind
 
 obj = LibStub:GetLibrary('LibDataBroker-1.1'):NewDataObject(addonName, {
   type = 'data source',
@@ -197,9 +206,8 @@ local function SetupSpells()
 
   local _, class = UnitClass('player')
   if class == 'HERO' then
-    local faction = UnitFactionGroup('player')
     if IsSpellKnown(818045) then
-      portals = spells[faction]
+      portals = spells[fac]
     else
       portals = {};
     end
@@ -207,8 +215,7 @@ local function SetupSpells()
     tinsert(portals, { 556, 'TRUE' })
   end
   if class == 'MAGE' then
-    local faction = UnitFactionGroup('player')
-    portals = spells[faction]
+    portals = spells[fac]
   elseif class == 'DEATHKNIGHT' then
     portals = {
       { 50977, 'TRUE' } --Death Gate
@@ -223,7 +230,7 @@ local function SetupSpells()
     }
   end
   -- Ascension: Stones of Retreat
-  if UnitFactionGroup('player') == "Horde" then
+  if fac == "Horde" then
     tinsert(portals, { 777000, 'TRUE' }) -- Orgrimmar
     tinsert(portals, { 777001, 'TRUE' }) -- Undercity
     tinsert(portals, { 777002, 'TRUE' }) -- Thunder Bluff
@@ -270,7 +277,7 @@ local function SetupSpells()
     tinsert(portals, { 777008, 'TRUE' }) -- Altar of Sha'tar
     tinsert(portals, { 102180, 'TRUE' }) -- Cenarion Refuge
 
-    if UnitFactionGroup('player') == "Horde" then
+    if fac == "Horde" then
       tinsert(portals, { 777014, 'TRUE' }) -- Silvermoon City
       tinsert(portals, { 102197, 'TRUE' }) -- Thrallmar
       tinsert(portals, { 102189, 'TRUE' }) -- Shadowmoon Village
@@ -285,12 +292,8 @@ local function SetupSpells()
       tinsert(portals, { 102187, 'TRUE' }) -- Orebor Harborage
       tinsert(portals, { 102200, 'TRUE' }) -- Wildhammer Stronghold
     end
-
   end
 
-  -- Ascension: Scrolls of Defense
-  tinsert(portals, { 83126, 'TRUE' }) -- Ashenvale
-  tinsert(portals, { 83128, 'TRUE' }) -- Hillsbrad Foothills
   -- Ascension: Runes of Retreat
   local runes = {
     { 979807 }, -- Flaming
