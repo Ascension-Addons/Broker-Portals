@@ -329,6 +329,9 @@ local function UpdateSpells()
       local spellid = findSpell(spell)
 
       if spellid then
+        if PortalsDB.showPortals and v[2] and not (GetNumPartyMembers() > 0 or UnitInRaid("player")) then
+          break
+        end
         methods[spell] = {
           spellid = spellid,
           text = spell,
@@ -339,7 +342,6 @@ local function UpdateSpells()
             spell = spell
           }
         }
-
         i = i + 1
       end
     end
@@ -583,8 +585,8 @@ local function UpdateMenu(level, value)
     end
     dewdrop:AddLine(
       'text', 'Show portals only in Party/Raid',
-      'checked', false,
-      'func', function() PortalsDB.announce = not PortalsDB.announce end,
+      'checked', PortalsDB.showPortals,
+      'func', function() PortalsDB.showPortals = not PortalsDB.showPortals end,
       'closeWhenClicked', true
     )
   elseif level == 3 and value == 'announce' then
@@ -620,6 +622,9 @@ function frame:PLAYER_LOGIN()
   end
   if PortalsDB.announceType == nil then
     PortalsDB.announceType = 'PARTYRAID'
+  end
+  if PortalsDB.showPortals == nil then
+    PortalsDB.showPortals = false
   end
 
   if icon then
